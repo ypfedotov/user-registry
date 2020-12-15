@@ -1,0 +1,14 @@
+#search-form {
+  border: 1px solid #c0c0c0;
+  flex: 1 0 auto;
+  display: flex;
+
+  input {
+    flex: 1 0 auto;
+    border: none;
+  }
+
+  .material-icons:hover {
+    color: rgba(0, 0, 0, 0.54);
+  }
+}

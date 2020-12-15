@@ -1,0 +1,17 @@
+#user-card-container {
+  margin: auto;
+  max-width: 900px;
+}
+
+#user-card {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+
+  div {
+    padding: 8px 0;
+  }
+
+  .label {
+    color: rgba(0, 0, 0, .54);
+  }
+}

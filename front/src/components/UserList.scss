@@ -1,0 +1,26 @@
+#user-list-container {
+  margin: auto;
+  max-width: 900px;
+
+  .header {
+    display: flex;
+    margin: 8px 0;
+  }
+}
+
+#user-list {
+  border-spacing: 0;
+  border-collapse: collapse;
+  width: 100%;
+
+  td, th {
+    text-align: left;
+    margin: 0;
+    padding: 8px 16px;
+    border: 1px solid #c0c0c0;
+  }
+
+  th {
+    background: #f0f0f0;
+  }
+}

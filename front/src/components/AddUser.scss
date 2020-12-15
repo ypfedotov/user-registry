@@ -1,0 +1,22 @@
+#add-user {
+  width: 900px;
+  margin: auto;
+}
+
+#add-user-form {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+
+  label, input {
+    display: block;
+    margin: 4px;
+  }
+
+  label {
+    color: rgba(0, 0, 0, .54);
+  }
+
+  input[type=submit] {
+    grid-column: 1 / 2;
+  }
+}
