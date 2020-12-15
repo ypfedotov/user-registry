@@ -1,6 +1,21 @@
 server:
   port: 8081
 
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: backend
+    password: 123
+  flyway:
+    user: postgres
+    password: 123
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    auto-mapping-behavior: full
+
+
 logging:
   level:
     com.yurifedotov.userregistry: DEBUG

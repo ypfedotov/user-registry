@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yurifedotov.userregistry.dataaccess.UserRepository">
+    <select id="findAll" resultType="com.yurifedotov.userregistry.model.User">
+        SELECT *
+        FROM userregistry.user u
+        ORDER BY u.username;
+    </select>
+
+    <select id="findById" resultType="com.yurifedotov.userregistry.model.User">
+        SELECT *
+        FROM userregistry.user u
+        WHERE u.id = #{userId};
+    </select>
+
+    <insert id="save">
+        INSERT INTO userregistry.user (id, full_name, email, username)
+        VALUES
+        <foreach collection="users" item="u" separator=",">
+            (
+             #{u.id},
+             SUBSTRING(#{u.fullName}, 1, 255),
+             SUBSTRING(#{u.email}, 1, 255),
+             SUBSTRING(#{u.username}, 1, 255)
+             )
+        </foreach>
+    </insert>
+</mapper>
