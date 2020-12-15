@@ -1,4 +1,5 @@
 import {User} from "../model/User";
+import axios from "axios";
 
 const userList = [
     {
@@ -15,38 +16,30 @@ const userList = [
     },
 ];
 
+axios.defaults.baseURL = "/";
+
+
 const backend = {
     async fetchUserList(): Promise<User[]> {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve(userList);
-            }, 300);
-        });
+        const response = await axios.get("/users");
+        return response.data;
     },
 
     async fetchUser(userId: string): Promise<User | undefined> {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve(userList.find(u => u.id === userId))
-            }, 300);
-        });
+        const response = await axios.get(`/users/${userId}`);
+        return response.data;
     },
 
     async saveUser(user: User) {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                userList.push(user);
-                resolve(undefined);
-            }, 300);
-        });
+        await axios.post(
+            `/users`,
+            [user],
+        );
     },
 
     async fetchUsersByName(query: string): Promise<User[]> {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve(userList.slice(0, 1));
-            }, 300);
-        });
+        const response = await axios.get(`/users/search?query=${encodeURIComponent(query)}`);
+        return response.data;
     }
 }
 

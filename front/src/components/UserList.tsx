@@ -36,9 +36,11 @@ function UserList() {
                 </div>
                 <table id="user-list">
                     <thead>
-                        <th>ID</th>
-                        <th>Full Name</th>
-                        <th>username</th>
+                        <tr>
+                            <th>ID</th>
+                            <th>Full Name</th>
+                            <th>username</th>
+                        </tr>
                     </thead>
                     <tbody>
                     { userRows }
