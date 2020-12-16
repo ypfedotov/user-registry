@@ -38,6 +38,14 @@ function SearchForm(props: Props) {
                    value={query}
                    onChange={e => setQuery(e.target.value)}
                    />
+            {
+                query &&
+                <i className="material-icons"
+                   onClick={() => setQuery("")}
+                >
+                    close
+                </i>
+            }
         </form>
     );
 }
