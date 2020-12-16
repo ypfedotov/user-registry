@@ -19,3 +19,4 @@ mybatis:
 logging:
   level:
     com.yurifedotov.userregistry: DEBUG
+    com.yurifedotov.userregistry.dataaccess: INFO

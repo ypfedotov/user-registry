@@ -36,6 +36,15 @@ function UserCard() {
                     <div className="label">username</div>
                     <div className="data">{user.username}</div>
 
+                    <div className="label">Date of Birth</div>
+                    <div className="data">{user.dateOfBirth}</div>
+
+                    <div className="label">Gender</div>
+                    <div className="data">{user.gender}</div>
+
+                    <div className="label">Photo</div>
+                    <div className="data"><img className="photo" src={user.photo} alt={user.username}/></div>
+
                 </div>
             </>
         )

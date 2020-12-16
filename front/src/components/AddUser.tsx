@@ -1,17 +1,17 @@
 import React, {useState} from "react";
 import {useHistory} from "react-router-dom";
-import {createUser, User} from "../model/User";
+import {createUser, Gender, User} from "../model/User";
 import "./AddUser.scss";
 import backend from "../backend/backend";
 import BackToUserList from "./BackToUserList";
 import DocumentTitle from "react-document-title";
 
 
-interface Props {
-
+function filterDate(input: string): string | null {
+    return input.match(/^\d{0,4}-?\d{0,2}-?\d{0,2}$/) ? input : null;
 }
 
-function AddUser(props: Props) {
+function AddUser() {
     const [user, setUser] = useState<User>(() => createUser());
 
     const history = useHistory();
@@ -67,6 +67,63 @@ function AddUser(props: Props) {
                                    username: e.target.value
                                });
                            }} />
+
+                    <label htmlFor="dateOfBirth">Date of Birth</label>
+                    <input type="text"
+                           name="dateOfBirth"
+                           placeholder="YYYY-MM-DD"
+                           value={user.dateOfBirth}
+                           onChange={e => {
+                               const newValue = filterDate(e.target.value);
+                               if (newValue !== null) {
+                                   setUser({
+                                       ...user,
+                                       dateOfBirth: newValue
+                                   });
+                               }
+                           }} />
+
+                    <label htmlFor="gender">Gender</label>
+                    <div className="radio-container">
+                        <label className="radio-label">
+                            <input type="radio"
+                                   name="gender"
+                                   checked={user.gender === "MALE"}
+                                   onChange={e => setUser({
+                                       ...user,
+                                       gender: "MALE"
+                                   })
+                                   } />
+                           Male
+                        </label>
+                        <label className="radio-label">
+                            <input type="radio"
+                                   name="gender"
+                                   checked={user.gender === "FEMALE"}
+                                   onChange={e => setUser({
+                                       ...user,
+                                       gender: "FEMALE"
+                                   })
+                                   } />
+                            Female
+                        </label>
+                    </div>
+
+                    <label htmlFor="photo">Photo</label>
+                    <input type="file"
+                           onChange={e => {
+                               console.log(e.target.files);
+                               const file = e.target.files && e.target.files[0];
+                               if (file) {
+                                   const reader = new FileReader();
+                                   reader.readAsDataURL(file);
+                                   reader.onload = e => setUser({
+                                       ...user,
+                                       photo: e.target?.result as string
+                                   });
+                               }
+                           }}
+                    />
 
                     <input type="submit" value="Save" />
                 </form>

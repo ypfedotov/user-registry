@@ -17,14 +17,25 @@
     </select>
 
     <insert id="save">
-        INSERT INTO userregistry.user (id, full_name, email, username)
+        INSERT INTO userregistry.user (
+               id,
+               full_name,
+               email,
+               username,
+               date_of_birth,
+               gender,
+               photo
+         )
         VALUES
         <foreach collection="users" item="u" separator=",">
             (
              #{u.id},
              SUBSTRING(#{u.fullName}, 1, 255),
              SUBSTRING(#{u.email}, 1, 255),
-             SUBSTRING(#{u.username}, 1, 255)
+             SUBSTRING(#{u.username}, 1, 255),
+             #{u.dateOfBirth},
+             CAST(#{u.gender} AS gender_type),
+             #{u.photo}
              )
         </foreach>
     </insert>
