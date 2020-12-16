@@ -12,5 +12,7 @@ public interface UserRepository {
 
     User findById(@Param("userId") String userId);
 
+    List<User> findByIds(List<String> userIds);
+
     void save(@Param("users") List<User> users);
 }

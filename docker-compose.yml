@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:13.1
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: 123
+
+  elastic:
+    image: elasticsearch:7.9.2
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      discovery.type: single-node
+
+  kibana:
+    image: kibana:7.9.2
+    ports:
+      - 5601:5601
+    environment:
+      ELASTICSEARCH_HOSTS: "http://elastic:9200/"

@@ -16,6 +16,16 @@
         WHERE u.id = #{userId};
     </select>
 
+    <select id="findByIds" resultType="com.yurifedotov.userregistry.model.User">
+        SELECT *
+        FROM userregistry.user u
+        WHERE u.id IN(
+            <foreach collection="userIds" item="userId" separator=",">
+                #{userId}
+            </foreach>
+        );
+    </select>
+
     <insert id="save">
         INSERT INTO userregistry.user (
                id,

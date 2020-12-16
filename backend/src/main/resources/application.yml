@@ -15,8 +15,12 @@ mybatis:
     map-underscore-to-camel-case: true
     auto-mapping-behavior: full
 
+elasticsearch:
+  hostname: localhost
+  port: 9200
+  indexName: user
 
 logging:
   level:
     com.yurifedotov.userregistry: DEBUG
-    com.yurifedotov.userregistry.dataaccess: INFO
+    com.yurifedotov.userregistry.dataaccess.UserRepository: INFO
