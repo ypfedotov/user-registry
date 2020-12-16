@@ -1,6 +1,7 @@
 package com.yurifedotov.userregistry.web;
 
 import com.yurifedotov.userregistry.model.User;
+import com.yurifedotov.userregistry.model.UserSummary;
 import com.yurifedotov.userregistry.service.UserService;
 import com.yurifedotov.userregistry.service.UserValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class UserController {
     }
 
     @GetMapping(value = "")
-    public List<User> getAllUsers() {
+    public List<UserSummary> getAllUsers() {
         return userService.getAllUsers();
     }
 
@@ -44,7 +45,7 @@ public class UserController {
     }
 
     @GetMapping("search")
-    public List<User> searchUsersByName(@RequestParam("query") String query) {
+    public List<UserSummary> searchUsersByName(@RequestParam("query") String query) {
         return userService.searchUsersByName(query);
     }
 }

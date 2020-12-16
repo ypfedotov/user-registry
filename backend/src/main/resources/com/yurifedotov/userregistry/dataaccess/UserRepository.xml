@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.yurifedotov.userregistry.dataaccess.UserRepository">
-    <select id="findAll" resultType="com.yurifedotov.userregistry.model.User">
-        SELECT *
+    <select id="findAllUserSummaries" resultType="com.yurifedotov.userregistry.model.UserSummary">
+        SELECT id, full_name, username
         FROM userregistry.user u
         ORDER BY u.username;
     </select>
@@ -16,8 +16,8 @@
         WHERE u.id = CAST(#{userId} AS UUID);
     </select>
 
-    <select id="findByIds" resultType="com.yurifedotov.userregistry.model.User">
-        SELECT *
+    <select id="findUserSummariesByIds" resultType="com.yurifedotov.userregistry.model.UserSummary">
+        SELECT id, full_name, username
         FROM userregistry.user u
         WHERE u.id IN(
             <foreach collection="userIds" item="userId" separator=",">

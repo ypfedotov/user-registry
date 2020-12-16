@@ -1,6 +1,7 @@
 package com.yurifedotov.userregistry.dataaccess;
 
 import com.yurifedotov.userregistry.model.User;
+import com.yurifedotov.userregistry.model.UserSummary;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -8,11 +9,11 @@ import java.util.List;
 
 @Mapper
 public interface UserRepository {
-    List<User> findAll();
+    List<UserSummary> findAllUserSummaries();
 
     User findById(@Param("userId") String userId);
 
-    List<User> findByIds(List<String> userIds);
+    List<UserSummary> findUserSummariesByIds(List<String> userIds);
 
     void save(@Param("user") User user);
 

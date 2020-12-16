@@ -3,14 +3,11 @@ package com.yurifedotov.userregistry.service;
 import com.yurifedotov.userregistry.dataaccess.UserRepository;
 import com.yurifedotov.userregistry.dataaccess.UserSearchRepository;
 import com.yurifedotov.userregistry.model.User;
-import org.apache.commons.lang3.StringUtils;
+import com.yurifedotov.userregistry.model.UserSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
@@ -30,8 +27,8 @@ public class UserService {
         this.searchRepository = searchRepository;
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserSummary> getAllUsers() {
+        return userRepository.findAllUserSummaries();
     }
 
     public User getUserById(String userId) {
@@ -67,17 +64,18 @@ public class UserService {
         }
     }
 
-    public List<User> searchUsersByName(String query) {
+    public List<UserSummary> searchUsersByName(String query) {
         List<String> matchingUserIds = searchRepository.findUserIdsByName(query);
         if (matchingUserIds.isEmpty()) {
             return Collections.emptyList();
         }
 
-        List<User> matchingUsers = userRepository.findByIds(matchingUserIds);
-        Map<String, User> usersById = matchingUsers.stream().collect(Collectors.toMap(User::getId, user -> user));
+        List<UserSummary> matchingUsers = userRepository.findUserSummariesByIds(matchingUserIds);
+        Map<String, UserSummary> usersById = matchingUsers.stream().collect(Collectors.toMap(UserSummary::getId, user -> user));
 
         return matchingUserIds.stream()
                 .map(usersById::get)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 }
