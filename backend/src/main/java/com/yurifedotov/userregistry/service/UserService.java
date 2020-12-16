@@ -3,13 +3,17 @@ package com.yurifedotov.userregistry.service;
 import com.yurifedotov.userregistry.dataaccess.UserRepository;
 import com.yurifedotov.userregistry.dataaccess.UserSearchRepository;
 import com.yurifedotov.userregistry.model.User;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Service
 public class UserService {
@@ -34,12 +38,33 @@ public class UserService {
         return userRepository.findById(userId);
     }
 
-    public void saveUsers(List<User> users) {
-        if (users.isEmpty()) {
-            return;
+    public void saveUser(User user) throws UserValidationException {
+        validateUser(user);
+        userRepository.save(user);
+        searchRepository.index(user);
+    }
+
+    private void validateUser(User user) throws UserValidationException {
+        Map<String, String> validationErrors = new HashMap<>();
+        if (isBlank(user.getFullName())) {
+            validationErrors.put("fullName", "Full name is required");
         }
-        userRepository.save(users);
-        searchRepository.index(users);
+
+        if (isBlank(user.getEmail())) {
+            validationErrors.put("email", "Email is required");
+        } else if (userRepository.emailExists(user.getEmail())) {
+            validationErrors.put("email", "User with this email already exists");
+        }
+
+        if (isBlank(user.getUsername())) {
+            validationErrors.put("username", "username is required");
+        } else if (userRepository.usernameExists(user.getUsername())) {
+            validationErrors.put("username", "User with this username already exists");
+        }
+
+        if (!validationErrors.isEmpty()) {
+            throw new UserValidationException(validationErrors);
+        }
     }
 
     public List<User> searchUsersByName(String query) {

@@ -33,7 +33,7 @@ const backend = {
     async saveUser(user: User) {
         await axios.post(
             `/users`,
-            [user],
+            user,
         );
     },
 

@@ -37,16 +37,26 @@
                photo
          )
         VALUES
-        <foreach collection="users" item="u" separator=",">
-            (
-             CAST(#{u.id} AS UUID),
-             SUBSTRING(#{u.fullName}, 1, 255),
-             SUBSTRING(#{u.email}, 1, 255),
-             SUBSTRING(#{u.username}, 1, 255),
-             #{u.dateOfBirth},
-             CAST(#{u.gender} AS gender_type),
-             #{u.photo}
-             )
-        </foreach>
+        (
+            CAST(#{user.id} AS UUID),
+            SUBSTRING(#{user.fullName}, 1, 255),
+            SUBSTRING(#{user.email}, 1, 255),
+            SUBSTRING(#{user.username}, 1, 255),
+            #{user.dateOfBirth},
+            CAST(#{user.gender} AS gender_type),
+            #{user.photo}
+        )
     </insert>
+
+    <select id="emailExists" resultType="boolean">
+        SELECT EXISTS(
+            SELECT 1 FROM userregistry.user WHERE email = #{email}
+        )
+    </select>
+
+    <select id="usernameExists" resultType="boolean">
+        SELECT EXISTS(
+            SELECT 1 FROM userregistry.user WHERE username = #{username}
+        )
+    </select>
 </mapper>

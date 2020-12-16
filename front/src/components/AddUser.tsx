@@ -5,6 +5,7 @@ import "./AddUser.scss";
 import backend from "../backend/backend";
 import BackToUserList from "./BackToUserList";
 import DocumentTitle from "react-document-title";
+import ErrorMessage from "./ErrorMessage";
 
 
 function filterDate(input: string): string | null {
@@ -13,6 +14,7 @@ function filterDate(input: string): string | null {
 
 function AddUser() {
     const [user, setUser] = useState<User>(() => createUser());
+    const [saveErrors, setSaveErrors] = useState<{[key: string]: string}>({});
 
     const history = useHistory();
 
@@ -24,15 +26,20 @@ function AddUser() {
                 <form id="add-user-form"
                       onSubmit={async e => {
                           e.preventDefault();
-                          await backend.saveUser(user);
-                          history.push("/");
+                          try {
+                              await backend.saveUser(user);
+                              history.push("/");
+                          } catch (e) {
+                              setSaveErrors(e.response?.data);
+                          }
                       }}>
-                    <label htmlFor="fullName">ID</label>
+                    <label htmlFor="id">ID</label>
                     <input type="text"
                            name="id"
                            disabled={true}
                            value={user.id}
                            />
+                    <ErrorMessage message={saveErrors["id"]} />
 
 
                     <label htmlFor="fullName">Full Name</label>
@@ -45,6 +52,7 @@ function AddUser() {
                                    fullName: e.target.value
                                });
                            }} />
+                    <ErrorMessage message={saveErrors["fullName"]} />
 
                     <label htmlFor="email">email</label>
                     <input type="text"
@@ -56,6 +64,7 @@ function AddUser() {
                                    email: e.target.value
                                });
                            }} />
+                    <ErrorMessage message={saveErrors["email"]} />
 
                     <label htmlFor="username">username</label>
                     <input type="text"
@@ -67,6 +76,7 @@ function AddUser() {
                                    username: e.target.value
                                });
                            }} />
+                    <ErrorMessage message={saveErrors["username"]} />
 
                     <label htmlFor="dateOfBirth">Date of Birth</label>
                     <input type="text"
@@ -82,6 +92,7 @@ function AddUser() {
                                    });
                                }
                            }} />
+                    <ErrorMessage message={saveErrors["dateOfBirth"]} />
 
                     <label htmlFor="gender">Gender</label>
                     <div className="radio-container">
@@ -108,6 +119,7 @@ function AddUser() {
                             Female
                         </label>
                     </div>
+                    <ErrorMessage message={saveErrors["gender"]} />
 
                     <label htmlFor="photo">Photo</label>
                     <input type="file"
@@ -124,6 +136,7 @@ function AddUser() {
                                }
                            }}
                     />
+                    <ErrorMessage message={saveErrors["photo"]} />
 
                     <input type="submit" value="Save" />
                 </form>

@@ -2,10 +2,8 @@ package com.yurifedotov.userregistry.dataaccess;
 
 import com.yurifedotov.userregistry.model.User;
 import org.apache.http.HttpHost;
-import org.elasticsearch.action.bulk.BulkItemResponse;
-import org.elasticsearch.action.bulk.BulkRequest;
-import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
@@ -48,23 +46,17 @@ public class UserSearchRepository {
         );
     }
 
-    public void index(List<User> users) {
+    public void index(User user) {
         try {
-            BulkRequest request = new BulkRequest();
-            for (User user: users) {
-                request.add(new IndexRequest(props.getIndexName())
-                        .id(user.getId())
-                        .source(XContentType.JSON,
-                                FULL_NAME_FIELD, user.getFullName()
-                        ));
-            }
+            IndexRequest request = new IndexRequest(props.getIndexName())
+                    .id(user.getId())
+                    .source(XContentType.JSON,
+                            FULL_NAME_FIELD, user.getFullName()
+                    );
 
-            BulkResponse response = client.bulk(request, RequestOptions.DEFAULT);
-            for (BulkItemResponse item : response.getItems()) {
-                logger.debug("{} {} {}", item.status(), item.isFailed(), item.getFailureMessage());
-            }
+            IndexResponse response = client.index(request, RequestOptions.DEFAULT);
 
-            logger.debug("Indexed {} users into {} index in {}", users.size(), props.getIndexName(), response.getTook());
+            logger.debug("Indexed user {} into '{}' index with result {}", user, props.getIndexName(), response.status());
 
         } catch (IOException e) {
             throw new UncheckedIOException(e);

@@ -14,5 +14,9 @@ public interface UserRepository {
 
     List<User> findByIds(List<String> userIds);
 
-    void save(@Param("users") List<User> users);
+    void save(@Param("user") User user);
+
+    boolean emailExists(@Param("email") String email);
+
+    boolean usernameExists(@Param("username") String username);
 }
