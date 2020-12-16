@@ -27,4 +27,5 @@ A simple demo user registry which allows to add, view and search basic user info
 `cd ./front`
 
 `yarn install`
+
 `yarn start`
