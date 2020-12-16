@@ -6,6 +6,7 @@ import backend from "../backend/backend";
 import BackToUserList from "./BackToUserList";
 import DocumentTitle from "react-document-title";
 import ErrorMessage from "./ErrorMessage";
+import RequiredMarker from "./RequiredMarker";
 
 
 function filterDate(input: string): string | null {
@@ -42,7 +43,7 @@ function AddUser() {
                     <ErrorMessage message={saveErrors["id"]} />
 
 
-                    <label htmlFor="fullName">Full Name</label>
+                    <label htmlFor="fullName">Full Name <RequiredMarker/></label>
                     <input type="text"
                            name="fullName"
                            value={user.fullName}
@@ -54,7 +55,7 @@ function AddUser() {
                            }} />
                     <ErrorMessage message={saveErrors["fullName"]} />
 
-                    <label htmlFor="email">email</label>
+                    <label htmlFor="email">email <RequiredMarker/></label>
                     <input type="text"
                            name="email"
                            value={user.email}
@@ -66,7 +67,7 @@ function AddUser() {
                            }} />
                     <ErrorMessage message={saveErrors["email"]} />
 
-                    <label htmlFor="username">username</label>
+                    <label htmlFor="username">username <RequiredMarker/></label>
                     <input type="text"
                            name="username"
                            value={user.username}
