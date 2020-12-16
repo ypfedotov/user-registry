@@ -1,7 +1,7 @@
 CREATE TYPE gender_type AS ENUM ('MALE', 'FEMALE');
 
 CREATE TABLE userregistry.user (
-    id CHAR(36) NOT NULL,
+    id UUID PRIMARY KEY,
     full_name VARCHAR(255) NULL,
     email VARCHAR(255) NULL,
     username VARCHAR(255) NULL,

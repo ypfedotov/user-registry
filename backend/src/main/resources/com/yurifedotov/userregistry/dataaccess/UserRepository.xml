@@ -13,7 +13,7 @@
     <select id="findById" resultType="com.yurifedotov.userregistry.model.User">
         SELECT *
         FROM userregistry.user u
-        WHERE u.id = #{userId};
+        WHERE u.id = CAST(#{userId} AS UUID);
     </select>
 
     <select id="findByIds" resultType="com.yurifedotov.userregistry.model.User">
@@ -21,7 +21,7 @@
         FROM userregistry.user u
         WHERE u.id IN(
             <foreach collection="userIds" item="userId" separator=",">
-                #{userId}
+                CAST(#{userId} AS UUID)
             </foreach>
         );
     </select>
@@ -39,7 +39,7 @@
         VALUES
         <foreach collection="users" item="u" separator=",">
             (
-             #{u.id},
+             CAST(#{u.id} AS UUID),
              SUBSTRING(#{u.fullName}, 1, 255),
              SUBSTRING(#{u.email}, 1, 255),
              SUBSTRING(#{u.username}, 1, 255),
