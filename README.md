@@ -6,7 +6,7 @@ A simple demo user registry which allows to add, view and search basic user info
 
 ### Prerequisites
 
-- docker 19
+- Docker 19
 - JDK 11
 - Maven 3.6
 - Node.js 12
@@ -14,16 +14,16 @@ A simple demo user registry which allows to add, view and search basic user info
 
 ### Start Postgres and Elasticsearch
 
-./reset-databases.sh
+`./reset-databases.sh`
 
 ### Run backend
 
-cd ./backend
+`cd ./backend`
 
-mvn clean package spring-boot:run
+`mvn clean package spring-boot:run`
 
 ### Run frontend
 
-cd ./front
+`cd ./front`
 
-yarn start
+`yarn start`
